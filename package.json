@@ -1,0 +1,41 @@
+{
+  "name": "myapp",
+  "version": "0.1.0",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "font-awesome": "^4.7.0",
+    "indicative": "^3.0.0",
+    "lodash": "^4.17.4",
+    "node-sass-chokidar": "^0.0.3",
+    "npm-run-all": "^4.0.2",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-bootstrap": "^0.31.2",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.1.2",
+    "react-scripts": "1.0.11",
+    "react-select": "^1.0.0-rc.5",
+    "react-transition-group": "1.1.2",
+    "reactstrap": "^4.8.0",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
+    "redux-form": "^7.0.3",
+    "redux-logger": "^3.0.6",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0",
+    "simple-line-icons": "^2.4.1"
+  },
+  "scripts": {
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "build-css": "node-sass-chokidar scss/style.scss -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar scss/style.scss -o src/ --watch --recursive"
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.2.1"
+  }
+}
