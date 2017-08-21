@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { objectToQueryString } from '../utils';
 
 const headers = {
   Token: 'Bearer 7a283fc9ce663fc14e0ef905c8aa5112aa08babc',
@@ -21,6 +22,16 @@ export function onGetBrandDetail(brand_id) {
   console.log('axios');
   return axios({
     url: `https://apidev.tesjor.com/v4/admin/brands/${brand_id}`,
+    headers
+  });
+}
+
+export function onGetBrandList(query) {
+  const URL = `https://apidev.tesjor.com/v4/admin/brands?`;
+  const queryString = objectToQueryString(query);
+  console.log('queryString', queryString);
+  return axios({
+    url: `${URL}${queryString}`,
     headers
   });
 }

@@ -1,5 +1,5 @@
-import { mapValues, keyBy } from 'lodash';
 import indicative from 'indicative';
+import { map, mapValues, keyBy } from 'lodash';
 
 /**
  * Return an error object for all reducer in container.
@@ -69,3 +69,21 @@ export async function validate(data, rules, messages = {}) {
 export function shouldAsyncValidate({ trigger, syncValidationPasses }) {
   return !syncValidationPasses ? false : [ 'blur', 'submit' ].includes(trigger) ? true : false;
 }
+
+/**
+ * Creates an object with the same keys as object and values.
+ *
+ * Example: [{field: 'name', message: 'some message'}] ==> {name: 'some message'}
+ *
+ * @param {object} obj={}
+ */
+export const mapValueKeys = (array = [], key = '', value = '') => mapValues(keyBy(array, key), value);
+
+/**
+ * Create query string from object
+ *
+ * Example: {name: 'Dominic', age: 20} ==> '&name=Dominic&age=20'
+ *
+ * @param {object} obj={}
+ */
+export const objectToQueryString = (obj = {}) => map(obj, (value, key) => `&${key}=${value}`).join('');

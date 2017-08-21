@@ -10,3 +10,4 @@
  */
 
 export const GET_BRAND_LIST = 'app/BrandList/GET_BRAND_LIST';
+export const SET_LOADING_LIST = 'app/BrandList/SET_LOADING_LIST';
