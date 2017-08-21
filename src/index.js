@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 import App from './containers/App';
+import Login from './containers/Login';
 import store from './store';
 
 // Styles
@@ -17,7 +18,7 @@ import './style.css';
 
 
 // Views
-import Login from './views/Pages/Login/';
+//import Login from './views/Pages/Login/';
 import Register from './views/Pages/Register/';
 import Page404 from './views/Pages/Page404/';
 import Page500 from './views/Pages/Page500/';

@@ -13,7 +13,7 @@ import { Sectors, TransactionTypes, VATs, VATMethods } from '../../components/In
 // ACTIONS
 import { getBrand } from './actions';
 
-import validateX from '../../utils/validator';
+import { validate } from '../../utils';
 
 class BrandEdit extends Component {
   componentDidMount() {
@@ -100,18 +100,18 @@ const mapStateToProps = ({ brandDetail: { payload, loading, serverError } }, own
 //   connect(mapStateToProps, { getBrand, createBrand })(BrandEdit)
 // );
 
-const validate = (values) => {
-  // const { name } = values;
-  // const error = {};
-  // error.name = 'Super Error';
-  // return error;
-};
+// const validate = (values) => {
+//   // const { name } = values;
+//   // const error = {};
+//   // error.name = 'Super Error';
+//   // return error;
+// };
 
 const asyncValidate = async (values) => {
-  return validateX(values, { name: 'required' });
+  return validate(values, { name: 'required' });
 };
 
 export default compose(
   connect(mapStateToProps, { getBrand }),
-  reduxForm({ form: 'BrandEditForm', validate, asyncValidate, enableReinitialize: true })
+  reduxForm({ form: 'BrandEditForm', asyncValidate, enableReinitialize: true })
 )(BrandEdit);
