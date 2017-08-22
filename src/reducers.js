@@ -3,12 +3,12 @@ import { reducer as fromReducer } from 'redux-form';
 
 import brandEditReducer from './containers/BrandEdit/reducer';
 import brandListReducer from './containers/BrandList/reducer';
-import sessionReducer from './containers/Login/reducer';
+import authReducer from './containers/Login/reducer';
 
 const rootReducer = combineReducers({
   brandDetail: brandEditReducer,
   brandList: brandListReducer,
-  session: sessionReducer,
+  authUser: authReducer,
   form: fromReducer
 });
 

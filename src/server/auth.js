@@ -1,26 +1,12 @@
 import axios from 'axios';
+import sha256 from 'crypto-js/sha256';
+import Base64 from 'crypto-js/enc-base64';
+import { getToken } from './_config';
 
-const headers = {
-  Authorization: 'Bearer 5LJGaAGttE4KcpyfY6ctvfKOofZCzpvS/L+Dl1q+vNQ=',
-  'Content-Type': 'application/json',
-  'Uses-Id': 123456,
-  'Local-Timezone': 'Asia/Phnom_Penh',
-  'App-Type': 'client',
-  'App-Version': 1,
-  'Device-Name': 'shit',
-  Model: 'shit',
-  'Os-version': 'xxx',
-  Platform: '123',
-  'Language-code': 'EN'
-};
-
-export function Auth() {
-  console.log('axios');
-  return axios({
-    url: `https://apidev.tesjor.com/v1/auth/authorize`,
-    headers,
-    body: {
-      client_id: '1234'
-    }
-  });
+export async function Login({ email, password }) {
+  //https://github.com/brix/crypto-js
+  const base64 = Base64.stringify(sha256(password));
+  const body = { email_or_phone: email, password: base64, target_role_cd: 'SAM' };
+  const token = await getToken();
+  return axios.post('/v1/auth/access-token/', body, token);
 }

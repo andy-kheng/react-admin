@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -23,15 +23,30 @@ import Register from './views/Pages/Register/';
 import Page404 from './views/Pages/Page404/';
 import Page500 from './views/Pages/Page500/';
 
+import auth from './auth';
+function requireAuth(nextState, replaceState) {
+  console.log('nextState', nextState);
+  if (!auth.loggedIn()) replaceState({ nextPathname: nextState.location.pathname }, '/login');
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      auth.isAuthenticated() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+      )}
+  />
+);
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route exact path="/login" name="Login Page" component={Login} />
-        <Route exact path="/register" name="Register Page" component={Register} />
-        <Route exact path="/404" name="Page 404" component={Page404} />
-        <Route exact path="/500" name="Page 500" component={Page500} />
-        <Route path="/" name="Home" component={App} />
+        <Route exact path="/login" component={Login}/>
+        <PrivateRoute path="/" name="Home" component={App} />
       </Switch>
     </Router>
   </Provider>,

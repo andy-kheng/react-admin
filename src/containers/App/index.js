@@ -8,6 +8,7 @@ import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import Aside from '../../components/Aside/Aside';
 import Footer from '../../components/Footer/Footer';
 import routes from '../../routes';
+import Page404 from '../../views/Pages/Page404/';
 
 class App extends Component {
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
                 {routes.map((route, index) => (
                   <Route key={index} path={route.path} exact={route.exact} component={route.component} />
                 ))}
+                <Route path="*" name="Page 404" component={Page404} />
               </Switch>
             </Container>
           </main>

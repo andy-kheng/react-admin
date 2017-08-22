@@ -18,9 +18,7 @@
 // export const yourAction = createAction('YOUR_ACTION_CONSTANT', () => {});
 
 import { createAction } from 'redux-actions';
-import auth from '../../server/auth';
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from './constants';
+import { Login } from '../../server/auth';
 
-export const requestLogin = createAction(LOGIN_REQUEST, auth.Auth);
-export const receiveLogin = createAction(LOGIN_SUCCESS, () => {});
-export const loginError = createAction(LOGIN_FAILURE, () => {});
+export const REQUEST_LOGIN = 'app/Login/REQUEST_LOGIN';
+export const requestLogin = createAction(REQUEST_LOGIN, Login);

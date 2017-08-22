@@ -21,17 +21,11 @@
  */
 
 import { handleActions } from 'redux-actions';
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from './constants';
-
-const defaultState = {
-
-};
+import { REQUEST_LOGIN } from './actions';
 
 export default handleActions(
   {
-    [LOGIN_REQUEST]: (state, action) => ({ ...state, ...action }),
-    [LOGIN_SUCCESS]: (state, action) => ({ ...state, ...action }),
-    [LOGIN_FAILURE]: (state, action) => ({ ...state, ...action }),
+    [REQUEST_LOGIN]: (state, { error, payload }) => ({ ...state, message: error ? payload.response.data.message : '' })
   },
-  defaultState
+  { message: '' }
 );
