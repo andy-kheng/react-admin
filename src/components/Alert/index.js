@@ -3,7 +3,7 @@ import { Alert } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 const CustomAlert = ({ error }) => {
-  const { status, statusText, message, stack } = error;
+  const { status, statusText, data: { message, stack } } = error;
   return (
     <div className="animated fadeIn">
       <Alert color="warning">

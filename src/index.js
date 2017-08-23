@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -17,38 +17,27 @@ import 'react-select/dist/react-select.css';
 import 'react-table/react-table.css';
 import './style.css';
 
-// Views
-//import Login from './views/Pages/Login/';
-import Register from './views/Pages/Register/';
-import Page404 from './views/Pages/Page404/';
-import Page500 from './views/Pages/Page500/';
-
-import auth from './auth';
-function requireAuth(nextState, replaceState) {
-  console.log('nextState', nextState);
-  if (!auth.loggedIn()) replaceState({ nextPathname: nextState.location.pathname }, '/login');
-}
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={(props) =>
-      auth.isAuthenticated() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-      )}
-  />
-);
+// import auth from './auth';
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+//   <Route
+//     {...rest}
+//     render={(props) =>
+//       auth.isAuthenticated() ? (
+//         <Component {...props} />
+//       ) : (
+//         <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+//       )}
+//   />
+// );
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <BrowserRouter>
       <Switch>
-        <Route exact path="/login" component={Login}/>
-        <PrivateRoute path="/" name="Home" component={App} />
+        <Route exact path="/login" component={Login} />
+        <Route path="/" name="Home" component={App} />
       </Switch>
-    </Router>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

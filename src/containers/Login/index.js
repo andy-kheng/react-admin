@@ -9,7 +9,7 @@ import { Container, Row, Col, CardGroup, Card, CardBlock, Button, Form, Alert } 
 import renderField from '../../components/Input/renderField';
 
 // ACTIONS
-import * as actions from './actions';
+//import * as actions from './actions';
 import { validate, shouldAsyncValidate } from '../../utils';
 
 class Login extends Component {
@@ -52,13 +52,13 @@ class Login extends Component {
 }
 
 const asyncValidate = (values) => validate(values, { email: 'email|required', password: 'required' });
-const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators(actions, dispatch) });
+//const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators(actions, dispatch) });
 const mapStateToProps = ({ authUser }) => ({
   initialValues: { email: '', password: '' },
   message: authUser.message
 });
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps),
   reduxForm({ form: 'LoginForm', asyncValidate, shouldAsyncValidate })
 )(Login);

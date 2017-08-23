@@ -17,12 +17,23 @@ const headers = {
   Model: window.navigator.vendor,
   Platform: 'PC'
 };
-export const authtoken = { baseURL, headers: { ...headers, 'X-Auth': `Bearer ${sessionStorage.auth_token}` } };
-export async function getToken() {
+function transformResponse(res) {
+  return res.data;
+}
+
+export const authtoken = {
+  baseURL,
+  //transformResponse,
+  headers: {
+    ...headers,
+    'X-Auth': `Bearer ${sessionStorage.auth_token || ''}`
+  }
+};
+export function* getToken() {
   if (!sessionStorage.token) {
     const Authorization = 'Bearer ';
     const AuthHeader = { ...headers, Authorization };
-    const { data } = await axios.post(
+    const { data } = yield axios.post(
       '/v1/auth/authorize',
       {
         client_id: ''
@@ -34,6 +45,7 @@ export async function getToken() {
   }
   return {
     baseURL,
+    transformResponse,
     headers: { ...headers, Token: `Bearer ${sessionStorage.token}` }
   };
 }

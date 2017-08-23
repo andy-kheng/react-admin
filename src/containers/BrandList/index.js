@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Row, Col, Card, CardHeader, CardBlock } from 'reactstrap';
 import ReactTable from 'react-table';
+import { Link } from 'react-router-dom';
+import { Row, Col, Card, CardHeader, CardBlock } from 'reactstrap';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
-import * as actions from './actions';
+import { actions } from '../../ducks/brands';
 import { mapValueKeys } from '../../utils';
 
 class BrandList extends Component {
@@ -19,15 +19,12 @@ class BrandList extends Component {
     const { pageSize, page, filtered } = state;
     const filter = mapValueKeys(filtered, 'id', 'value');
 
-
-    const { setLoadingList, getBrandList } = this.props.actions;
-    setLoadingList();
-    getBrandList({ limit: pageSize, offset: pageSize * page, ...filter });
+    const { getList } = this.props.actions;
+    getList({ limit: pageSize, offset: pageSize * page, ...filter });
   }
 
   render() {
-    const { data, loading, page } = this.props.brandList;
-
+    const { data, loading, page } = this.props.brands;
     return (
       <div className="animated fadeIn">
         <Row>
@@ -63,7 +60,7 @@ class BrandList extends Component {
   }
 }
 
-const mapStateToProps = ({ brandList }) => ({ brandList });
+const mapStateToProps = ({ brands }) => ({ brands });
 const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators(actions, dispatch) });
 export default connect(mapStateToProps, mapDispatchToProps)(BrandList);
 

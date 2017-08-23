@@ -1,6 +1,6 @@
 // MODULES
 import React, { Component } from 'react';
-import { compose } from 'redux';
+import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, Alert } from 'reactstrap';
@@ -11,7 +11,7 @@ import renderField from '../../components/Input/renderField';
 import { Sectors, TransactionTypes, VATs, VATMethods } from '../../components/Input/data';
 
 // ACTIONS
-import { getBrand } from './actions';
+import { actions } from '../../ducks/brand';
 
 import { validate } from '../../utils';
 
@@ -19,7 +19,7 @@ class BrandEdit extends Component {
   componentDidMount() {
     const { brand_id } = this.props.match.params;
     console.log('brand_id', brand_id);
-    if (brand_id) this.props.getBrand(brand_id);
+    if (brand_id) this.props.actions.getBrand(brand_id);
     else this.props.getBrand(19);
   }
 
@@ -28,14 +28,13 @@ class BrandEdit extends Component {
   }
 
   render() {
-    const { handleSubmit, loading, serverError } = this.props;
-    console.log('render');
+    const { handleSubmit, brand: brandState } = this.props;
+    const { brand, brand_categories, group_brands, loading, error } = brandState;
+    console.log('render', brand);
     if (loading) return <Row>Loading...</Row>;
-    if (serverError) return <CustomAlert error={serverError} />;
+    if (error) return <CustomAlert error={error} />;
     return (
       <div className="animated fadeIn">
-        {/* <Alert isOpen={!!this.props.brand.error}>I am an alert and I can be dismissed!</Alert> */}
-
         <Form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <Row>
             <Col xs="12" sm="6">
@@ -46,7 +45,22 @@ class BrandEdit extends Component {
                 <CardBlock className="card-body">
                   <Field type="text" label="Name in Englist" name="name" component={renderField} />
                   <Field type="text" label="Name in Khmer" name="locales.KH.name" component={renderField} />
-                  <Field type="text" label="Group Brand" name="group_brand_id" component={renderField} />
+                  <Field
+                    type="select"
+                    label="Brand Category"
+                    name="brand_category_ids"
+                    options={brand_categories}
+                    multi={true}
+                    component={renderField}
+                  />
+                  <Field
+                    type="select"
+                    label="Group Brand"
+                    name="group_brand_id"
+                    options={group_brands}
+                    component={renderField}
+                  />
+
                   <Field type="select" label="Sector" name="sector_cd" options={Sectors} component={renderField} />
                   <Field
                     type="select"
@@ -90,28 +104,14 @@ class BrandEdit extends Component {
     );
   }
 }
-const mapStateToProps = ({ brandDetail: { payload, loading, serverError } }, ownProps = {}) => ({
-  initialValues: payload,
-  loading,
-  serverError
-});
+const mapDispatchToProps = (dispatch) => ({ actions: bindActionCreators(actions, dispatch) });
+const mapStateToProps = ({ brand }, ownProps = {}) => ({ initialValues: brand.data, brand });
 
-// export default reduxForm({ form: 'BrandEditForm', validate })(
-//   connect(mapStateToProps, { getBrand, createBrand })(BrandEdit)
-// );
-
-// const validate = (values) => {
-//   // const { name } = values;
-//   // const error = {};
-//   // error.name = 'Super Error';
-//   // return error;
-// };
-
-const asyncValidate = async (values) => {
+const asyncValidate = (values) => {
   return validate(values, { name: 'required' });
 };
 
 export default compose(
-  connect(mapStateToProps, { getBrand }),
+  connect(mapStateToProps, mapDispatchToProps),
   reduxForm({ form: 'BrandEditForm', asyncValidate, enableReinitialize: true })
 )(BrandEdit);
