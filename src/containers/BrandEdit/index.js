@@ -4,6 +4,7 @@ import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, Alert } from 'reactstrap';
+import _ from 'lodash';
 
 // COMPONENTS
 import CustomAlert from '../../components/Alert';
@@ -11,16 +12,15 @@ import renderField from '../../components/Input/renderField';
 import { Sectors, TransactionTypes, VATs, VATMethods } from '../../components/Input/data';
 
 // ACTIONS
-import { actions } from '../../ducks/brand';
+import { actions } from '../../reducers/brand.reducer';
 
 import { validate } from '../../utils';
 
 class BrandEdit extends Component {
   componentDidMount() {
-    const { brand_id } = this.props.match.params;
-    console.log('brand_id', brand_id);
-    if (brand_id) this.props.actions.getBrand(brand_id);
-    else this.props.getBrand(19);
+    const { match: { params }, actions: { getBrand } } = this.props;
+    const { brand_id } = params;
+    getBrand({ brand_id });
   }
 
   onSubmit(values) {
@@ -29,8 +29,8 @@ class BrandEdit extends Component {
 
   render() {
     const { handleSubmit, brand: brandState } = this.props;
-    const { brand, brand_categories, group_brands, loading, error } = brandState;
-    console.log('render', brand);
+    const { data, brand_categories, group_brands, loading, error } = brandState;
+    console.log(data);
     if (loading) return <Row>Loading...</Row>;
     if (error) return <CustomAlert error={error} />;
     return (
@@ -43,8 +43,12 @@ class BrandEdit extends Component {
                   <strong>Infomation</strong>
                 </CardHeader>
                 <CardBlock className="card-body">
-                  <Field type="text" label="Name in Englist" name="name" component={renderField} />
-                  <Field type="text" label="Name in Khmer" name="locales.KH.name" component={renderField} />
+                  <Field type="text" label="Name" name="name" component={renderField} />
+                  {/* {_.forEach(data.locales, (x) => {
+                    console.log(x);
+                    //<Field type="text" label="Name in Khmer" name="locales.KH.name" component={renderField} />
+                  })} */}
+
                   <Field
                     type="select"
                     label="Brand Category"

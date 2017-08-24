@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
-import { actions } from '../../ducks/brands';
+import { actions } from '../../reducers/brands.reducer';
 
 class Playground extends Component {
   constructor(props) {

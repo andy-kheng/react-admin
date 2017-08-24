@@ -7,6 +7,7 @@ export function getBrandList(query) {
   return axios.get(`/v4/admin/brands?${queryString}`, authtoken);
 }
 
-export function getDetail(brand_id) {
-  return axios.get(`/v4/admin/brands/${brand_id}`, authtoken);
+export function* getDetail(brand_id) {
+  const { data: brand } = yield axios.get(`/v4/admin/brands/${brand_id}`, authtoken);
+  return brand;
 }

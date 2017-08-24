@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
 
-import { actions } from '../../ducks/brands';
+import { actions } from '../../reducers/brands.reducer';
 import { mapValueKeys } from '../../utils';
 
 class BrandList extends Component {

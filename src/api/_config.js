@@ -29,6 +29,14 @@ export const authtoken = {
     'X-Auth': `Bearer ${sessionStorage.auth_token || ''}`
   }
 };
+export const token = {
+  baseURL,
+  //transformResponse,
+  headers: {
+    ...headers,
+    Token: `Bearer ${sessionStorage.auth_token || ''}`
+  }
+};
 export function* getToken() {
   if (!sessionStorage.token) {
     const Authorization = 'Bearer ';

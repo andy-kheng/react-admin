@@ -1,10 +1,11 @@
-import * as brand from './brand';
+import * as Brand from './brand';
 //import * as auth from './auth';
-import * as group_brand from './group_brand';
-import * as brand_category from './brand_category';
+import * as GroupBrand from './group_brand';
+import * as BrandCategory from './brand_category';
+import * as Language from './language';
 
 export function serverError(error) {
   const { response: { data, status, statusText } } = JSON.parse(JSON.stringify(error));
   return { data, status, statusText };
 }
-export default { brand_category, brand, group_brand };
+export default { BrandCategory, Brand, GroupBrand, Language };
