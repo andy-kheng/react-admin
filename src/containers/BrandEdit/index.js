@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, Alert } from 'reactstrap';
+import { Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, CardImg } from 'reactstrap';
 import _ from 'lodash';
 
 // COMPONENTS
@@ -29,79 +29,88 @@ class BrandEdit extends Component {
 
   render() {
     const { handleSubmit, brand: brandState } = this.props;
-    const { data, brand_categories, group_brands, loading, error } = brandState;
-    console.log(data);
+    const { locale_fields, brand_categories, group_brands, loading, error } = brandState;
+    console.log(brandState.brand);
     if (loading) return <Row>Loading...</Row>;
     if (error) return <CustomAlert error={error} />;
     return (
-      <div className="animated fadeIn">
+      <div className='animated fadeIn'>
         <Form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <Row>
-            <Col xs="12" sm="6">
+            <Col xs='12' md='6'>
               <Card>
                 <CardHeader>
                   <strong>Infomation</strong>
                 </CardHeader>
-                <CardBlock className="card-body">
-                  <Field type="text" label="Name" name="name" component={renderField} />
-                  {/* {_.forEach(data.locales, (x) => {
-                    console.log(x);
-                    //<Field type="text" label="Name in Khmer" name="locales.KH.name" component={renderField} />
-                  })} */}
+                <CardBlock className='card-body'>
+                  <Field type='text' label='Name' name='name' component={renderField} />
 
                   <Field
-                    type="select"
-                    label="Brand Category"
-                    name="brand_category_ids"
+                    type='select'
+                    label='Brand Category'
+                    name='brand_category_ids'
                     options={brand_categories}
                     multi={true}
                     component={renderField}
                   />
                   <Field
-                    type="select"
-                    label="Group Brand"
-                    name="group_brand_id"
+                    type='select'
+                    label='Group Brand'
+                    name='group_brand_id'
                     options={group_brands}
                     component={renderField}
                   />
 
-                  <Field type="select" label="Sector" name="sector_cd" options={Sectors} component={renderField} />
+                  <Field type='select' label='Sector' name='sector_cd' options={Sectors} component={renderField} />
                   <Field
-                    type="select"
-                    label="Transaction Type"
-                    name="transaction_type_cd"
+                    type='select'
+                    label='Transaction Type'
+                    name='transaction_type_cd'
                     options={TransactionTypes}
                     multi={true}
                     component={renderField}
                   />
-                  <Field type="select" label="VAT" name="vat" options={VATs} component={renderField} />
-                  <Field
-                    type="select"
-                    label="VAT Calculation Method"
-                    name="vat_method"
-                    options={VATMethods}
-                    component={renderField}
-                  />
-                  <Field type="text" label="Color" name="color" component={renderField} />
+
+                  <Row>
+                    <Col md='6'>
+                      <Field type='select' label='VAT' name='vat' options={VATs} component={renderField} />
+                    </Col>
+                    <Col md='6'>
+                      <Field
+                        type='select'
+                        label='VAT Method'
+                        name='vat_method'
+                        options={VATMethods}
+                        component={renderField}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Field type='text' label='Color' name='color' component={renderField} />
                 </CardBlock>
                 <CardFooter>
-                  <Button type="submit" size="md" color="primary">
-                    <i className="fa fa-save" /> Create
+                  <Button type='submit' size='md' color='primary'>
+                    <i className='fa fa-save' /> Create
                   </Button>
-                  <Button type="reset" size="md" color="secondary">
-                    <i className="fa fa-ban" /> Cancel
+                  <Button type='reset' size='md' color='secondary'>
+                    <i className='fa fa-ban' /> Cancel
                   </Button>
                 </CardFooter>
               </Card>
             </Col>
-            {/* <Col xs="12" sm="6">
+
+            <Col xs='12' md='6'>
               <Card>
                 <CardHeader>
-                  <strong>Company</strong>
+                  <strong>Locales</strong>
                 </CardHeader>
-                <CardBlock className="card-body" />
+                <CardBlock className='card-body'>
+                  {locale_fields.map(({ name, label }, index) => (
+                    <Field key={index} type='text' label={label} name={name} component={renderField} />
+                  ))}
+                </CardBlock>
               </Card>
-            </Col> */}
+            </Col>
           </Row>
         </Form>
       </div>

@@ -44,7 +44,7 @@ export default handleActions(
 //==============================================
 function* getBrandListSaga({ payload }) {
   try {
-    const { data: responseData } = yield call(api.brand.getBrandList, payload);
+    const { data: responseData } = yield call(api.Brand.getBrandList, payload);
     const { data, metadata: { total, limit } } = responseData;
     yield put({ type: types.GET_BRANDS_SUCCESS, data, page: Math.ceil(total / limit) });
   } catch (error) {

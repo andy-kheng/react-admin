@@ -8,7 +8,6 @@
  * AppReducer
  * const reducer = handleActions( { [YOUR_ACTION_CONSTANT]: (state, action) => ({ ...state, ...action }) }, defaultState );
  */
-import _ from 'lodash';
 import { createAction, handleActions } from 'redux-actions';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import Api, { serverError } from '../api';
@@ -34,6 +33,7 @@ export const actions = {
 export const initialState = {
   loading: true,
   error: null,
+  locale_fields: [],
   data: {
     banner_file_name: '',
     brand_category_ids: [],
@@ -62,6 +62,7 @@ export default handleActions(
 // REDUX-SAGA
 //==============================================
 function* getBrandDetailSaga({ payload }) {
+  const log = console.log;
   try {
     const { brand_id } = payload || {};
     const brand = brand_id ? yield call(Api.Brand.getDetail, brand_id) : initialState.data;
@@ -73,23 +74,29 @@ function* getBrandDetailSaga({ payload }) {
       call(Api.Language.getList)
     ]);
 
-    console.log('languages', languages);
+    log('languages', languages);
     const locales = {};
+    const locale_fields = [];
     languages.forEach(({ language_name, language_code }) => {
       const { name = '' } = brand.locales[language_code] || {};
       locales[language_code] = { name, language_name };
+      locale_fields.push({
+        label: `Name in ${language_name}`,
+        name: `locales.${language_code}.name`
+      });
     });
     Object.assign(brand, { transaction_type_cd: brand.transaction_type_cd.split('|'), locales });
-    console.log('new brand', brand);
+    log('new brand', brand);
 
     yield put({
       type: types.GET_BRAND_SUCCESS,
       data: brand,
+      locale_fields,
       group_brands: group_brands.map((x) => ({ label: x.name, value: x.id })),
       brand_categories: brand_categories.map((x) => ({ label: x.name, value: x.id }))
     });
   } catch (error) {
-    console.log(error);
+    log(error);
     yield put({
       type: types.GET_BRAND_ERROR,
       error: serverError(error)
