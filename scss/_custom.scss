@@ -5,3 +5,14 @@
     justify-content: center;
     flex-direction: column; //text-align: center;
 }
+
+// For change position of dropdown
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
+
+.dropup {
+    bottom: 100%;
+    top: auto;
+}

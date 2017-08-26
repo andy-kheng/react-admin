@@ -2,9 +2,10 @@ import axios from 'axios';
 import { objectToQueryString } from '../utils';
 import { authtoken } from './_config';
 
-export function getBrandList(query) {
+export function* getBrandList(query) {
   const queryString = objectToQueryString(query);
-  return axios.get(`/v4/admin/brands?${queryString}`, authtoken);
+  const { data: result } = yield axios.get(`/v4/admin/brands?${queryString}`, authtoken);
+  return result;
 }
 
 export function* getDetail(brand_id) {
