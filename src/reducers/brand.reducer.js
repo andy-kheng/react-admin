@@ -10,7 +10,7 @@
  */
 import { createAction, handleActions } from 'redux-actions';
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import Api, { serverError } from '../api';
+import API, { serverError } from '../api';
 
 export const types = {
   INITIALIZE_BRAND: 'app/BRAND/INITIALIZE_BRAND',
@@ -65,13 +65,13 @@ function* getBrandDetailSaga({ payload }) {
   const log = console.log;
   try {
     const { brand_id } = payload || {};
-    const brand = brand_id ? yield call(Api.Brand.getDetail, brand_id) : initialState.data;
+    const brand = brand_id ? yield call(API.Brand.getDetail, brand_id) : initialState.data;
 
     const options = { status_cd: 'ACT', order: '-name', limit: 1000 };
     const [ { data: group_brands }, { data: brand_categories }, { data: languages } ] = yield all([
-      call(Api.GroupBrand.getList, options),
-      call(Api.BrandCategory.getList, options),
-      call(Api.Language.getList)
+      call(API.GroupBrand.getList, options),
+      call(API.BrandCategory.getList, options),
+      call(API.Language.getList)
     ]);
 
     log('languages', languages);

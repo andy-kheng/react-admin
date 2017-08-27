@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   Button,
@@ -12,15 +13,24 @@ import {
   UncontrolledButtonDropdown
 } from 'reactstrap';
 
+import { actions } from '../../reducers/brands.reducer';
+
 class ActionButtons extends Component {
   constructor(props) {
     super(props);
     this.state = { modal: false, backdrop: true };
-    this.toggle = this.toggle.bind(this);
+    this._onToggle = this._onToggle.bind(this);
+    this._onDelete = this._onDelete.bind(this);
   }
 
-  toggle() {
+  _onToggle() {
     this.setState({ modal: !this.state.modal });
+  }
+
+  _onDelete() {
+    const { removeBrand, row } = this.props;
+    removeBrand({ brand_id: row.value });
+    this._onToggle();
   }
 
   render() {
@@ -40,7 +50,7 @@ class ActionButtons extends Component {
             <DropdownItem tag={Link} to={link}>
               <i className='fa fa-pencil' />Update
             </DropdownItem>
-            <DropdownItem onClick={this.toggle}>
+            <DropdownItem onClick={this._onToggle}>
               <i className='fa fa-ban' />Delete
             </DropdownItem>
             <DropdownItem header>Setup</DropdownItem>
@@ -61,8 +71,8 @@ class ActionButtons extends Component {
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledButtonDropdown>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} backdrop={this.state.backdrop}>
-          <ModalHeader toggle={this.toggle}>Delete Brand</ModalHeader>
+        <Modal isOpen={this.state.modal} toggle={this._onToggle} backdrop={this.state.backdrop}>
+          <ModalHeader toggle={this._onToggle}>Delete Brand</ModalHeader>
           <ModalBody>
             <div>
               <img src={small} className='rounded border border-secondary mr-2' width='50' />
@@ -70,10 +80,10 @@ class ActionButtons extends Component {
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button color='danger' onClick={this.toggle}>
+            <Button color='danger' onClick={this._onDelete}>
               Delete
             </Button>{' '}
-            <Button color='light' onClick={this.toggle}>
+            <Button color='light' onClick={this._onToggle}>
               Cancel
             </Button>
           </ModalFooter>
@@ -83,4 +93,4 @@ class ActionButtons extends Component {
   }
 }
 
-export default ActionButtons;
+export default connect(null, { removeBrand: actions.removeBrand })(ActionButtons);
