@@ -37,7 +37,7 @@ class BrandEdit extends Component {
       <div className='animated fadeIn'>
         <Form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <Row>
-            <Col xs='12' md='6'>
+            <Col xs='12' sm='12' md='6'>
               <Card>
                 <CardHeader>
                   <strong>Infomation</strong>
@@ -99,17 +99,69 @@ class BrandEdit extends Component {
               </Card>
             </Col>
 
-            <Col xs='12' md='6'>
-              <Card>
-                <CardHeader>
-                  <strong>Locales</strong>
-                </CardHeader>
-                <CardBlock className='card-body'>
-                  {locale_fields.map(({ name, label }, index) => (
-                    <Field key={index} type='text' label={label} name={name} component={renderField} />
-                  ))}
-                </CardBlock>
-              </Card>
+            <Col xs='12' sm='12' md='6'>
+              <Row>
+                <Col xs='12'>
+                  <Card>
+                    <CardHeader>
+                      <strong>Locales</strong>
+                    </CardHeader>
+                    <CardBlock className='card-body'>
+                      {locale_fields.map(({ name, label }, index) => (
+                        <Field key={index} type='text' label={label} name={name} component={renderField} />
+                      ))}
+                    </CardBlock>
+                  </Card>
+                </Col>
+
+                <Col xs='12'>
+                  <Card>
+                    <CardHeader>
+                      <strong>Meal Time</strong>
+                    </CardHeader>
+                    <CardBlock className='card-body'>
+                      <Row>
+                        <Col md='6'>
+                          <Field
+                            type='select'
+                            label='Breakfast Start Time'
+                            name='vat'
+                            options={VATs}
+                            component={renderField}
+                          />
+                        </Col>
+                        <Col md='6'>
+                          <Field
+                            type='select'
+                            label='Breakfast End Time'
+                            name='vat_method'
+                            options={VATMethods}
+                            component={renderField}
+                          />
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col md='6'>
+                          <Field type='select' label='Lunch' name='vat' options={VATs} component={renderField} />
+                        </Col>
+                        <Col md='6'>
+                          <Field type='select' name='vat_method' options={VATMethods} component={renderField} />
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col md='6'>
+                          <Field type='select' label='dinner' name='vat' options={VATs} component={renderField} />
+                        </Col>
+                        <Col md='6'>
+                          <Field type='select' name='vat_method' options={VATMethods} component={renderField} />
+                        </Col>
+                      </Row>
+                    </CardBlock>
+                  </Card>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Form>

@@ -9,16 +9,12 @@ import { debounce } from 'lodash';
 import ReactTable from 'react-table';
 import { Row, Col, Card, CardHeader, CardBlock } from 'reactstrap';
 import { columns } from './columns';
+import Alert from '../../components/Alert';
 
 // -- ACTIONS / HELPER
 import { actions } from '../../reducers/brands.reducer';
 import { mapValueKeys } from '../../utils';
 
-/**
- * Brand List Container
- * Props: [brands]
- * Actions: [getList, resetList]
- */
 class BrandList extends Component {
   constructor(props) {
     super(props);
@@ -36,11 +32,12 @@ class BrandList extends Component {
   }
 
   render() {
-    const { data, loading, page } = this.props.brands;
+    const { data, loading, page, error } = this.props.brands;
     return (
       <div className='animated fadeIn'>
         <Row>
           <Col lg='12'>
+            {error && <Alert error={error} />}
             <Card>
               <CardHeader>
                 <i className='icon-list' />Brand List

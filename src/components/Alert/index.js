@@ -2,28 +2,16 @@ import React from 'react';
 import { Alert } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-const CustomAlert = ({ error }) => {
-  const { status, statusText, data: { message, stack } } = error;
+const Errors = ({ error, color = 'danger' }) => {
   return (
-    <div className="animated fadeIn">
-      <Alert color="warning">
-        <div>
-          <h4 className="alert-heading">
-            {`${status}:  `}
-            <small>{statusText}</small>
-          </h4>
-          <hr />
-          <strong>Error:</strong> {message}
-          <br />
-          <strong>Stack:</strong> {stack}
-        </div>
-      </Alert>
-    </div>
+    <Alert color={color}>
+      <strong>Error:</strong> {error}
+    </Alert>
   );
 };
 
-export default CustomAlert;
+export default Errors;
 
-CustomAlert.propTypes = {
-  error: PropTypes.object.isRequired
+Errors.propTypes = {
+  error: PropTypes.string.isRequired
 };
