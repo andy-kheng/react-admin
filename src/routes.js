@@ -9,13 +9,11 @@
 
 import BrandEdit from './containers/BrandEdit';
 import BrandList from './containers/BrandList';
-import Playground from './containers/Playground';
 
 const routes = [
   { path: '/brands/create', component: BrandEdit },
   { path: '/brands/:brand_id/menus/:id', component: BrandEdit },
   { path: '/brands/:brand_id', component: BrandEdit },
-  { path: '/brands', component: BrandList },
-  { path: '/playground', component: Playground }
+  { path: '/brands', component: BrandList }
 ];
 export default routes;

@@ -9,10 +9,10 @@ import { debounce } from 'lodash';
 import ReactTable from 'react-table';
 import { Row, Col, Card, CardHeader, CardBlock } from 'reactstrap';
 import { columns } from './columns';
-import Alert from '../../components/Alert';
+import { Alert } from '../../components';
 
 // -- ACTIONS / HELPER
-import { actions } from '../../reducers/brands.reducer';
+import { actions } from '../../reducers/brands';
 import { mapValueKeys } from '../../utils';
 
 class BrandList extends Component {
@@ -28,7 +28,7 @@ class BrandList extends Component {
   }
 
   componentWillUnmount() {
-    this.props.actions.resetList(); // RESET LIST TO DEFAULT STATE
+    this.props.actions._resetList(); // RESET LIST TO DEFAULT STATE
   }
 
   render() {

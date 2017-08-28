@@ -13,7 +13,7 @@ import {
   UncontrolledButtonDropdown
 } from 'reactstrap';
 
-import { actions } from '../../reducers/brands.reducer';
+import { actions } from '../../reducers/brands';
 
 class ActionButtons extends Component {
   constructor(props) {

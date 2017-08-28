@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form, CardImg } from 'reactstrap';
-import _ from 'lodash';
+import Datetime from 'react-datetime';
+import { Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form } from 'reactstrap';
 
 // COMPONENTS
 import CustomAlert from '../../components/Alert';
@@ -12,7 +12,7 @@ import renderField from '../../components/Input/renderField';
 import { Sectors, TransactionTypes, VATs, VATMethods } from '../../components/Input/data';
 
 // ACTIONS
-import { actions } from '../../reducers/brand.reducer';
+import { actions } from '../../reducers/brand';
 
 import { validate } from '../../utils';
 
@@ -28,9 +28,9 @@ class BrandEdit extends Component {
   }
 
   render() {
-    const { handleSubmit, brand: brandState } = this.props;
-    const { locale_fields, brand_categories, group_brands, loading, error } = brandState;
-    console.log(brandState.brand);
+    const { handleSubmit, brand } = this.props;
+    const { locale_fields, brand_categories, group_brands, loading, meal_times, error } = brand;
+    console.log(brand);
     if (loading) return <Row>Loading...</Row>;
     if (error) return <CustomAlert error={error} />;
     return (
@@ -44,7 +44,14 @@ class BrandEdit extends Component {
                 </CardHeader>
                 <CardBlock className='card-body'>
                   <Field type='text' label='Name' name='name' component={renderField} />
-
+                  <Field
+                    type='select'
+                    label='Group Brand'
+                    name='group_brand_id'
+                    options={group_brands}
+                    component={renderField}
+                  />
+                  <Field type='select' label='Sector' name='sector_cd' options={Sectors} component={renderField} />
                   <Field
                     type='select'
                     label='Brand Category'
@@ -53,15 +60,6 @@ class BrandEdit extends Component {
                     multi={true}
                     component={renderField}
                   />
-                  <Field
-                    type='select'
-                    label='Group Brand'
-                    name='group_brand_id'
-                    options={group_brands}
-                    component={renderField}
-                  />
-
-                  <Field type='select' label='Sector' name='sector_cd' options={Sectors} component={renderField} />
                   <Field
                     type='select'
                     label='Transaction Type'
@@ -85,20 +83,18 @@ class BrandEdit extends Component {
                       />
                     </Col>
                   </Row>
-
-                  <Field type='text' label='Color' name='color' component={renderField} />
+                  <Field type='text' label='Color' name='color_code' component={renderField} />
                 </CardBlock>
-                <CardFooter>
+                {/* <CardFooter>
                   <Button type='submit' size='md' color='primary'>
                     <i className='fa fa-save' /> Create
                   </Button>
                   <Button type='reset' size='md' color='secondary'>
                     <i className='fa fa-ban' /> Cancel
                   </Button>
-                </CardFooter>
+                </CardFooter> */}
               </Card>
             </Col>
-
             <Col xs='12' sm='12' md='6'>
               <Row>
                 <Col xs='12'>
@@ -120,48 +116,61 @@ class BrandEdit extends Component {
                       <strong>Meal Time</strong>
                     </CardHeader>
                     <CardBlock className='card-body'>
-                      <Row>
-                        <Col md='6'>
-                          <Field
-                            type='select'
-                            label='Breakfast Start Time'
-                            name='vat'
-                            options={VATs}
-                            component={renderField}
-                          />
-                        </Col>
-                        <Col md='6'>
-                          <Field
-                            type='select'
-                            label='Breakfast End Time'
-                            name='vat_method'
-                            options={VATMethods}
-                            component={renderField}
-                          />
-                        </Col>
-                      </Row>
-
-                      <Row>
-                        <Col md='6'>
-                          <Field type='select' label='Lunch' name='vat' options={VATs} component={renderField} />
-                        </Col>
-                        <Col md='6'>
-                          <Field type='select' name='vat_method' options={VATMethods} component={renderField} />
-                        </Col>
-                      </Row>
-
-                      <Row>
-                        <Col md='6'>
-                          <Field type='select' label='dinner' name='vat' options={VATs} component={renderField} />
-                        </Col>
-                        <Col md='6'>
-                          <Field type='select' name='vat_method' options={VATMethods} component={renderField} />
-                        </Col>
-                      </Row>
+                      {meal_times.map(({ label_start, name_start, label_end, name_end }, index) => (
+                        <Row key={index}>
+                          <Col md='6'>
+                            <Field type='time' label={label_start} name={name_start} component={renderField} />
+                          </Col>
+                          <Col md='6'>
+                            <Field type='time' label={label_end} name={name_end} component={renderField} />
+                          </Col>
+                        </Row>
+                      ))}
                     </CardBlock>
                   </Card>
                 </Col>
               </Row>
+            </Col>
+            <Col xs='12' sm='12' md='12'>
+              <Card>
+                <CardHeader>
+                  <strong>Images</strong>
+                </CardHeader>
+                <CardBlock className='card-body'>
+                  <Row>
+                    <Col sm='6'>
+                      <img
+                        src={brand.data.logo.large}
+                        height='200'
+                        className='rounded border border-dark float-right'
+                        alt='...'
+                      />
+                    </Col>
+                    <Col sm='6'>
+                      <img
+                        src={brand.data.banner.large}
+                        height='200'
+                        className='rounded border border-dark float-left'
+                        alt='...'
+                      />
+                    </Col>
+                  </Row>
+                </CardBlock>
+              </Card>
+            </Col>
+            <Col xs='12'>
+              <Card>
+                <CardBlock>
+                  <div className='float-right'>
+                    <Button type='submit' size='md' color='primary'>
+                      <i className='fa fa-save' /> Create
+                    </Button>{' '}
+                    <Button type='reset' size='md' color='light'>
+                      <i className='fa fa-ban' /> Cancel
+                    </Button>
+                  </div>
+                </CardBlock>
+              </Card>
             </Col>
           </Row>
         </Form>

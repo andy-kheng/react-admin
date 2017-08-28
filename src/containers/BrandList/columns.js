@@ -1,7 +1,10 @@
+// -- MODULES
 import React from 'react';
-import ActionButtons from './ActionButtons';
 import { Link } from 'react-router-dom';
 import { UncontrolledTooltip } from 'reactstrap';
+
+// -- COMPONENTS
+import ActionButtons from './ActionButtons';
 
 export const columns = [
   {
