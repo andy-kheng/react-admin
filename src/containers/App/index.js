@@ -4,13 +4,9 @@ import { Route, Switch } from 'react-router-dom';
 import NotificationsSystem from 'reapop';
 import theme from 'reapop-theme-wybo';
 
-import Header from '../../components/Header/Header';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
-import Aside from '../../components/Aside/Aside';
-import Footer from '../../components/Footer/Footer';
+import { Breadcrumb, Header, Sidebar, Aside, Footer } from '../../components';
 import routes from '../../routes';
-import Page404 from '../../views/Pages/Page404/';
+//import Page404 from '../../views/Pages/Page404/';
 
 class App extends Component {
   render() {
@@ -27,7 +23,7 @@ class App extends Component {
                 {routes.map((route, index) => (
                   <Route key={index} path={route.path} exact={route.exact} component={route.component} />
                 ))}
-                <Route path='*' name='Page 404' component={Page404} />
+                {/* <Route path='*' name='Page 404' component={Page404} /> */}
               </Switch>
             </Container>
           </main>
