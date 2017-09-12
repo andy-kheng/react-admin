@@ -18,7 +18,7 @@ function* removeBrandSaga({ payload }) {
     const { brand_id } = payload || {};
     yield call(API.Brand.remove, brand_id);
     yield put(notify({ title: 'Success', message: 'Brand has been delete successfully.', status: 'success' }));
-    yield put({ type: types.GET_BRANDS_FAILURE, brand_id });
+    yield put({ type: types.REMOVE_BRAND_SUCCESS, brand_id });
   } catch (error) {
     const message = error.response.data.message;
     yield put(notify({ title: 'Error', message, status: 'error' }));

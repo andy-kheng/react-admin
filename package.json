@@ -7,12 +7,15 @@
     "font-awesome": "^4.7.0",
     "indicative": "^3.0.0",
     "lodash": "^4.17.4",
+    "mobx": "^3.2.2",
+    "mobx-react": "^4.2.2",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
+    "react-app-rewire-mobx": "^1.0.6",
     "react-datetime": "^2.10.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
@@ -32,7 +35,7 @@
     "simple-line-icons": "^2.4.1"
   },
   "scripts": {
-    "start-js": "react-scripts start",
+    "start-js": "react-app-rewired start",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -41,6 +44,9 @@
     "watch-css": "npm run build-css && node-sass-chokidar scss/style.scss -o src/ --watch --recursive"
   },
   "devDependencies": {
-    "eslint-plugin-react": "^7.2.1"
+    "babel-eslint": "^7.2.3",
+    "eslint-plugin-react": "^7.2.1",
+    "mobx-react-devtools": "^4.2.15",
+    "react-app-rewired": "^1.2.7"
   }
 }

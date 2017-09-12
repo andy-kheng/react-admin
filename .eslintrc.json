@@ -6,6 +6,7 @@
     "node": true
   },
   "plugins": [ "react" ],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 8,
     "ecmaFeatures": {

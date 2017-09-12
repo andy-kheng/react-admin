@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
+import { Provider as MobXProvider } from 'mobx-react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import registerServiceWorker from './registerServiceWorker';
-
+import DevTools from 'mobx-react-devtools';
 import App from './containers/App';
 import Login from './containers/Login';
 import store from './store';
+
+import CounterStore from './stores/counter.store'
 
 // Styles
 // Import Font Awesome Icons Set
@@ -33,14 +36,21 @@ import './style.css';
 // );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route path="/" name="Home" component={App} />
-      </Switch>
-    </BrowserRouter>
-  </Provider>,
+  <div><DevTools />
+  <ReduxProvider store={store}>
+      <BrowserRouter>
+          <MobXProvider
+            counterStore={new CounterStore()}
+          >
+            <Switch>
+                <Route exact path="/login" component={Login} />
+                <Route path="/" name="Home" component={App} />
+            </Switch>
+
+          </MobXProvider>
+      </BrowserRouter>
+
+  </ReduxProvider></div>,
   document.getElementById('root')
 );
 
