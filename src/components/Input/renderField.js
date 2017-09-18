@@ -19,6 +19,7 @@ export default function(fields) {
 }
 
 const rederField = ({ input, type, options, multi, meta: { touched, error } }) => {
+  console.log(type)
   switch (type) {
     case 'time':
       return (

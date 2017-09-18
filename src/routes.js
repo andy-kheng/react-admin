@@ -8,9 +8,11 @@
  */
 
 import BrandEdit from './containers/BrandEdit';
-import BrandList from './containers/BrandList';
+import BrandList from './containers/Brand/BrandList';
 import RestaurantList from './containers/Restaurant/RestaurantList';
-import Counter from './components/Counter/Counter'
+import Counter from './components/Counter/Counter';
+import BrandEdits from './containers/Brand/BrandEdit';
+
 
 const routes = [
   { path: '/brands/create', component: BrandEdit },
@@ -19,6 +21,8 @@ const routes = [
   { path: '/brands', component: BrandList },
 
   { path: '/restaurants', component: RestaurantList },
-  { path: '/counter', component: Counter }
+  { path: '/counter', component: Counter },
+
+  { path: '/brand/:brand_id', component: BrandEdits },
 ];
 export default routes;

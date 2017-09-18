@@ -151,7 +151,7 @@ export default {
     },
     {
       name: 'Playground',
-      url: '/playground',
+      url: '/counter',
       icon: 'fa fa-ball'
     },
     {
@@ -164,8 +164,8 @@ export default {
       icon: 'icon-tag'
     },
     {
-      name: 'Merchant',
-      url: '/components/social-buttons',
+      name: 'Restaurant',
+      url: '/restaurants',
       icon: 'icon-basket-loaded'
     },
     {

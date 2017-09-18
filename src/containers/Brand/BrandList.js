@@ -12,24 +12,24 @@ import {Alert} from '../../components';
 import { mapValueKeys } from '../../utils';
 
 @observer(['stores'])
-class RestaurantList extends React.Component {
+class BrandList extends React.Component {
 
 
 
   componentWillMount() {
-    const {fetchRestaurants} = this.props.stores.restaurantStore;
-    fetchRestaurants({limit:10})
+    const {fetchBrands} = this.props.stores.brandStore;
+    fetchBrands({limit:10})
   }
 
   _fetchData = (state) => {
     console.log('state:',state);
     const { pageSize, page, filtered } = state;
     const filter = mapValueKeys(filtered, 'id', 'value');
-    this.props.stores.restaurantStore.fetchRestaurants({ limit: pageSize, offset: pageSize * page, ...filter });
+    this.props.stores.brandStore.fetchBrands({ limit: pageSize, offset: pageSize * page, ...filter });
   }
 
   render() {
-    const {merchants: data, loading, page, error} = this.props.stores.restaurantStore;
+    const {brands: data, loading, page, error} = this.props.stores.brandStore;
     return (
       <div className='animated fadeIn'>
         <Row>
@@ -37,7 +37,7 @@ class RestaurantList extends React.Component {
             {error && <Alert error={error}/>}
             <Card>
               <CardHeader>
-                <i className='icon-list'/>Restaurant List
+                <i className='icon-list'/>Brand List
                 <Link
                   to='/brands/create'
                   className='btn btn-outline-primary btn-sm float-right'
@@ -58,4 +58,4 @@ class RestaurantList extends React.Component {
   }
 }
 
-export default RestaurantList
+export default BrandList

@@ -9,6 +9,7 @@
     "lodash": "^4.17.4",
     "mobx": "^3.2.2",
     "mobx-react": "^4.2.2",
+    "mobx-react-form": "^1.32.1",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "node-sass-chokidar": "^0.0.3",
@@ -24,6 +25,7 @@
     "react-select": "^1.0.0-rc.5",
     "react-table": "^6.5.3",
     "react-transition-group": "1.1.2",
+    "react-widgets": "^4.0.0",
     "reactstrap": "^4.8.0",
     "reapop": "^1.1.2",
     "reapop-theme-wybo": "^0.4.1",
@@ -32,12 +34,13 @@
     "redux-form": "^7.0.3",
     "redux-saga": "^0.15.6",
     "redux-thunk": "^2.2.0",
-    "simple-line-icons": "^2.4.1"
+    "simple-line-icons": "^2.4.1",
+    "validatorjs": "^3.13.5"
   },
   "scripts": {
     "start-js": "react-app-rewired start",
     "start": "npm-run-all -p watch-css start-js",
-    "build": "npm run build-css && react-scripts build",
+    "build": "npm run build-css && react-app-rewired build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build-css": "node-sass-chokidar scss/style.scss -o src/",

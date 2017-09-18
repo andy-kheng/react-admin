@@ -3,7 +3,10 @@ import {NavLink} from 'react-router-dom';
 import {Badge, Nav, NavItem} from 'reactstrap';
 import classNames from 'classnames';
 import nav from './_nav'
+import { inject, observer } from 'mobx-react'
 
+@inject('stores')
+@observer
 class Sidebar extends Component {
 
   handleClick(e) {
@@ -28,6 +31,8 @@ class Sidebar extends Component {
     const props = this.props;
     const activeRoute = this.activeRoute;
     const handleClick = this.handleClick;
+
+    const { loading  } = props.stores.counterStore;
 
     // badge addon to NavItem
     const badge = (badge) => {
@@ -88,6 +93,7 @@ class Sidebar extends Component {
     return (
       <div className="sidebar">
         <nav className="sidebar-nav">
+          <p>{ loading  ? 'loading...': '' }</p>
           <Nav>
             {navList(nav.items)}
           </Nav>
