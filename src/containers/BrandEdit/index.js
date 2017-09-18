@@ -4,7 +4,7 @@ import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import Datetime from 'react-datetime';
-
+import { Row, Col, Button, Card, CardHeader, CardFooter, CardBlock, Form } from 'reactstrap';
 
 // COMPONENTS
 import CustomAlert from '../../components/Alert';
